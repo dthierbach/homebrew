@@ -101,6 +101,16 @@ class PostgisPostgresAT13 < Formula
     ]
   end
 
+  def caveats
+    caveats = ""
+    caveats += <<~EOS
+      Symlink postgis into postgres keg e.g. with
+        for f in lib bin share ; do stow -v -n -d /usr/local/opt/postgis-postgres\@13 -t /usr/local/opt/postgresql\@13/$f/ $f ; done
+    EOS
+
+    caveats
+  end
+
   test do
     pg_version = Formula["postgresql@13"].version.major
     expected = /'PostGIS built for PostgreSQL % cannot be loaded in PostgreSQL %',\s+#{pg_version}\.\d,/
